@@ -2,6 +2,21 @@ var altura = 0;
 var largura = 0;
 var vidas = 1;
 var tempo = 10;
+var nivel = window.location.search;
+var criaMosquitoTempo = 1500;
+
+var nivel = nivel.replace('?', '');
+
+if(nivel === 'normal') {
+    //1500ms
+    criaMosquitoTempo = 1500
+} else if(nivel === 'dificil') {
+    //1000ms
+    criaMosquitoTempo = 1000
+} else if(nivel === 'chucknorris') {
+    //750ms
+    criaMosquitoTempo = 750
+}
 
 function ajustaTamanhoTelaGame() {
     altura = window.innerHeight;
@@ -13,11 +28,11 @@ ajustaTamanhoTelaGame();
 var cronometro = setInterval(function() {
    tempo -= 1;
    if(tempo < 0){
-    clearInterval(cronometro);
-    clearInterval(criaMosquito);
-    alert('Vitoria');
+        clearInterval(cronometro);
+        clearInterval(criaMosquito);
+        window.location.href = 'vitoria.html';
    } else {
-    document.getElementById('cronometro').innerHTML = tempo;
+        document.getElementById('cronometro').innerHTML = tempo;
    }
 },1000);
 
