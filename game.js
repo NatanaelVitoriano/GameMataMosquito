@@ -1,7 +1,7 @@
 var altura = 0;
 var largura = 0;
 var vidas = 1;
-var tempo = 10;
+var tempo = 15;
 var nivel = window.location.search;
 var criaMosquitoTempo = 1500;
 
@@ -38,6 +38,7 @@ var cronometro = setInterval(function() {
 
 function posicaoRandomica() {
 
+    debugger
     //remover o mosquito anterior (caso exista)
     if(document.getElementById('mosquito')){
         document.getElementById('mosquito').remove();
@@ -56,7 +57,6 @@ function posicaoRandomica() {
     posicaoX = posicaoX < 0 ? 0 : posicaoX;
     posicaoY = posicaoY < 0 ? 0 : posicaoY;
 
-    console.log(posicaoX, posicaoY);
 
     var mosquito = document.createElement('img');
     mosquito.src = 'imagens/mosquito.png';
@@ -68,14 +68,30 @@ function posicaoRandomica() {
 
     mosquito.style.position = 'absolute';
 
+
     mosquito.id = 'mosquito';
 
     mosquito.onclick = function() {
         this.remove();
+        mosquitoDie(this);
+        setTimeout(() => {
+            document.getElementById('mosquitoDie').remove();
+        }, 1000);
     }
 
     document.body.appendChild(mosquito);
 
+}
+
+function mosquitoDie(mosquito) {
+        var mosquitoDie = document.createElement('img');
+        mosquitoDie.src = 'imagens/mosquito_die.png';
+        mosquitoDie.className = mosquito.className;
+        mosquitoDie.style.left = mosquito.style.left;
+        mosquitoDie.style.top = mosquito.style.top;
+        mosquitoDie.id = 'mosquitoDie';
+        mosquitoDie.style.position = mosquito.style.position;
+        document.body.appendChild(mosquitoDie);
 }
 
 function tamanhoAleatorio() {

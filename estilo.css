@@ -6,6 +6,9 @@ body {
     background-image: url(imagens/bg.jpg);
     background-repeat: no-repeat;
     background-size: 100%;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
 .mosquito1 {
