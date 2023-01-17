@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Game Mata Mosquito</title>
     <link rel="stylesheet" href="estilo.css">
     <script src="game.js"></script>
 </head>
+
 <body onresize="ajustaTamanhoTelaGame()">
 
     <div class="painel">
@@ -19,13 +21,21 @@
     </div>
 
     <script>
-
         document.getElementById('cronometro').innerHTML = tempo;
 
-       var criaMosquito = setInterval(function() {
-            posicaoRandomica();
+        var criaMosquito = setInterval(function () {
+            if(document.getElementById('borboleta')) {
+                document.getElementById('borboleta').remove();
+            }
+            let numeroAleatorio = Math.random();
+
+            if(numeroAleatorio < 0.3) {
+                borboletaCreate();
+            } else {
+                posicaoRandomica();
+            }
         }, criaMosquitoTempo);
     </script>
 </body>
-    
+
 </html>
