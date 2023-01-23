@@ -1,22 +1,14 @@
 var altura = 0;
 var largura = 0;
 var vidas = 1;
-var tempo = 15;
-var nivel = window.location.search;
-var criaMosquitoTempo = 1500;
-
-var nivel = nivel.replace('?', '');
-
-if(nivel === 'normal') {
-    //1500ms
-    criaMosquitoTempo = 1500
-} else if(nivel === 'dificil') {
-    //1000ms
-    criaMosquitoTempo = 1000
-} else if(nivel === 'chucknorris') {
-    //750ms
-    criaMosquitoTempo = 750
-}
+var placar = 0;
+var scoreFinal = 0;
+var urlParameters =  window.location.search.split('?')[1].split('&');
+// var nivel = window.location.search && window.location.search != '' ? window.location.search.replace('?', '') : 'normal';
+var nivel = urlParameters[0];
+var nickname = urlParameters[1];
+let niveis = { 'normal': 1500, 'dificil': 1000, 'chucknorris': 750 }
+var criaMosquitoTempo = niveis[nivel];
 
 function ajustaTamanhoTelaGame() {
     altura = window.innerHeight;
@@ -25,26 +17,20 @@ function ajustaTamanhoTelaGame() {
 
 ajustaTamanhoTelaGame();
 
-var cronometro = setInterval(function() {
-   tempo -= 1;
-   if(tempo < 0){
-        clearInterval(cronometro);
-        clearInterval(criaMosquito);
-        window.location.href = 'vitoria.html';
-   } else {
-        document.getElementById('cronometro').innerHTML = tempo;
-   }
-},1000);
+function pontuacao() {
+    placar += 10;
+    document.getElementById('pontuacao').innerHTML = placar;
+    scoreFinal = document.getElementById('pontuacao').innerHTML;
+}
 
 function posicaoRandomica() {
-
-    debugger
+   
     //remover o mosquito anterior (caso exista)
     if(document.getElementById('mosquito')){
         document.getElementById('mosquito').remove();
 
         if(vidas > 2){
-            window.location.href = 'fim_de_jogo.html';
+            window.location.href = 'fim_de_jogo.html?' + urlParameters[1] + '&' + scoreFinal;
         } else {
             document.getElementById('v' + vidas).src="imagens/coracao_vazio.png"
             vidas++;
@@ -72,6 +58,7 @@ function posicaoRandomica() {
     mosquito.id = 'mosquito';
 
     mosquito.onclick = function() {
+        pontuacao();
         this.remove();
         mosquitoDie(this);
         setTimeout(() => {

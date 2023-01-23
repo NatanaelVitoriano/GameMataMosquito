@@ -15,13 +15,13 @@
             <img id="v2" src="imagens/coracao_cheio.png">
             <img id="v3" src="imagens/coracao_cheio.png">
         </div>
-        <div class="cronometro">
-            Tempo restante: <span id="cronometro"></span>
+        <div class="pontuacao">
+            Placar de pontos: <span id="pontuacao"></span>
         </div>
     </div>
 
     <script>
-        document.getElementById('cronometro').innerHTML = tempo;
+        document.getElementById('pontuacao').innerHTML = placar;
 
         var criaMosquito = setInterval(function () {
             if(document.getElementById('borboleta')) {

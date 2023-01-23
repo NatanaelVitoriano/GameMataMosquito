@@ -19,7 +19,10 @@
             <div class="col">
                 <div class="d-flex justify-content-center">
                     <div class="mb-2">
-                        <select class="form-control" id="nivel">
+                        <div class="mb-2 d-flex justify-content-center">
+                            <input id="nickname" class="form-control text-center" type="text" placeholder="Digite seu nickname" style="font-weight: bold;">
+                        </div>
+                        <select class="form-control text-center" id="nivel" style="font-weight: bold;">
                             <option value="">--Selecione o nivel de dificuldade--</option>
                             <option value="normal">Normal</option>
                             <option value="dificil">Dificil</option>
@@ -41,11 +44,12 @@
     <script>
         function iniciarJogo(){
             nivel = document.getElementById('nivel').value;
+            nickname = document.getElementById('nickname').value;
             if(nivel == "") {
                 alert("Selecione um nivel de dificuldade para iniciar o jogo");
                 return false;
             } 
-            window.location.href = 'app.html?' + nivel;
+            window.location.href = 'app.html?' + nivel + '&' + nickname;
         }
     </script>
 </body>
