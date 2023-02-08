@@ -5,32 +5,35 @@ var placar = 0;
 var scoreFinal = 0;
 var urlParameters =  window.location.search.split('?')[1].split('&');
 // var nivel = window.location.search && window.location.search != '' ? window.location.search.replace('?', '') : 'normal';
-var nivel = urlParameters[0];
-var nickname = urlParameters[1];
-let niveis = { 'normal': 1500, 'dificil': 1000, 'chucknorris': 750 }
-var criaMosquitoTempo = niveis[nivel];
+var nickname = urlParameters[0];
+// var nivel = urlParameters[1];
+// let niveis = { 'normal': 1500, 'dificil': 1000, 'chucknorris': 750 }
+var criarMosquitoTempo = 1500;
 
-function ajustaTamanhoTelaGame() {
+function ajustarTamanhoTelaGame() {
     altura = window.innerHeight;
     largura = window.innerWidth;
 }
 
-ajustaTamanhoTelaGame();
+ajustarTamanhoTelaGame();
 
-function pontuacao() {
+function atualizarPontucao() {
     placar += 10;
+    if((placar * 10) > 0){
+        criaMosquitoTempo = 500;
+    }
     document.getElementById('pontuacao').innerHTML = placar;
     scoreFinal = document.getElementById('pontuacao').innerHTML;
 }
 
-function posicaoRandomica() {
+function criarMosquito() {
    
     //remover o mosquito anterior (caso exista)
     if(document.getElementById('mosquito')){
         document.getElementById('mosquito').remove();
 
         if(vidas > 2){
-            window.location.href = 'fim_de_jogo.html?' + urlParameters[1] + '&' + scoreFinal;
+            window.location.href = 'fim_de_jogo.html?' + urlParameters[0] + '&' + scoreFinal;
         } else {
             document.getElementById('v' + vidas).src="imagens/coracao_vazio.png"
             vidas++;
@@ -58,11 +61,11 @@ function posicaoRandomica() {
     mosquito.id = 'mosquito';
 
     mosquito.onclick = function() {
-        pontuacao();
+        atualizarPontucao();
         this.remove();
-        mosquitoDie(this);
+        eliminarMosquito(this);
         setTimeout(() => {
-            document.getElementById('mosquitoDie').remove();
+            document.getElementById('eliminarMosquito').remove();
         }, 1000);
     }
 
@@ -70,18 +73,18 @@ function posicaoRandomica() {
 
 }
 
-function mosquitoDie(mosquito) {
-        var mosquitoDie = document.createElement('img');
-        mosquitoDie.src = 'imagens/mosquito_die.png';
-        mosquitoDie.className = mosquito.className;
-        mosquitoDie.style.left = mosquito.style.left;
-        mosquitoDie.style.top = mosquito.style.top;
-        mosquitoDie.id = 'mosquitoDie';
-        mosquitoDie.style.position = mosquito.style.position;
-        document.body.appendChild(mosquitoDie);
+function eliminarMosquito(mosquito) {
+        var eliminarMosquito = document.createElement('img');
+        eliminarMosquito.src = 'imagens/mosquito_die.png';
+        eliminarMosquito.className = mosquito.className;
+        eliminarMosquito.style.left = mosquito.style.left;
+        eliminarMosquito.style.top = mosquito.style.top;
+        eliminarMosquito.id = 'eliminarMosquito';
+        eliminarMosquito.style.position = mosquito.style.position;
+        document.body.appendChild(eliminarMosquito);
 }
 
-function borboletaCreate() {
+function criarBorboleta() {
 
     var borboleta = document.createElement('img');
     borboleta.src = 'imagens/borboleta.gif';
@@ -101,7 +104,7 @@ function borboletaCreate() {
     borboleta.id = 'borboleta';
 
     borboleta.onclick = function() {
-        window.location.href = 'fim_de_jogo.html';
+        window.location.href = 'fim_de_jogo.html?' + urlParameters[0] + '&' + scoreFinal;
     }
 
     document.body.appendChild(borboleta);
