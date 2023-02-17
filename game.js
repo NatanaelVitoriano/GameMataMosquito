@@ -1,13 +1,11 @@
+var criaMosquito;
 var altura = 0;
 var largura = 0;
 var vidas = 1;
 var placar = 0;
 var scoreFinal = 0;
 var urlParameters =  window.location.search.split('?')[1].split('&');
-// var nivel = window.location.search && window.location.search != '' ? window.location.search.replace('?', '') : 'normal';
 var nickname = urlParameters[0];
-// var nivel = urlParameters[1];
-// let niveis = { 'normal': 1500, 'dificil': 1000, 'chucknorris': 750 }
 var criarMosquitoTempo = 1500;
 
 function ajustarTamanhoTelaGame() {
@@ -17,10 +15,32 @@ function ajustarTamanhoTelaGame() {
 
 ajustarTamanhoTelaGame();
 
+function aumentarDificuldade(tempo) {
+    criarMosquitoTempo = tempo;
+    clearInterval(criaMosquito);
+    criaMosquito = setInterval(function () {
+        if(document.getElementById('borboleta')) {
+            document.getElementById('borboleta').remove();
+        }
+        let numeroAleatorio = Math.random();
+
+        if(numeroAleatorio < 0.3) {
+            criarBorboleta();
+        } else {
+            criarMosquito();
+        }
+    }, criarMosquitoTempo);
+}
+
 function atualizarPontucao() {
+    debugger
     placar += 10;
-    if((placar * 10) > 0){
-        criaMosquitoTempo = 500;
+    if(placar >= 100 && placar < 200){
+        aumentarDificuldade(1000);
+    } else if(placar >= 200  && placar < 300){
+        aumentarDificuldade(750);
+    }  else if(placar >= 300){
+        aumentarDificuldade(500);
     }
     document.getElementById('pontuacao').innerHTML = placar;
     scoreFinal = document.getElementById('pontuacao').innerHTML;
@@ -85,7 +105,9 @@ function eliminarMosquito(mosquito) {
 }
 
 function criarBorboleta() {
-
+    if(document.getElementById('mosquito')){
+        document.getElementById('mosquito').remove();
+    }
     var borboleta = document.createElement('img');
     borboleta.src = 'imagens/borboleta.gif';
     borboleta.className = tamanhoAleatorio() + ' ' + ladoAleatorio();

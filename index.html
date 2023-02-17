@@ -44,7 +44,11 @@
     <script>
         function iniciarJogo(){
             nickname = document.getElementById('nickname').value;
-            window.location.href = 'app.html?' +  nickname;
+            if(nickname == '') {
+                alert('Digite um nickname para iniciar');
+            } else {
+                window.location.href = 'app.html?' +  nickname;
+            }
         }
     </script>
 </body>
