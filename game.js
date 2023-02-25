@@ -107,6 +107,13 @@ function eliminarMosquito(mosquito) {
 function criarBorboleta() {
     if(document.getElementById('mosquito')){
         document.getElementById('mosquito').remove();
+        
+        if(vidas > 2){
+            window.location.href = 'fim_de_jogo.html?' + urlParameters[0] + '&' + scoreFinal;
+        } else {
+            document.getElementById('v' + vidas).src="imagens/coracao_vazio.png"
+            vidas++;
+        }
     }
     var borboleta = document.createElement('img');
     borboleta.src = 'imagens/borboleta.gif';
